@@ -7,6 +7,7 @@ const RewardInfo = require('../models/RewardInfo');
 const BuyBuildingHistory = require('../models/BuyBuildingHistory');
 const BuyBuilding = require('../models/BuyBuilding');
 const PalTokenSaleHistory = require('../models/PalTokenSaleHistory');
+const Furniture = require('../models/Furniture');
 
 exports.init = async () => {
   //init account info
@@ -47,34 +48,6 @@ exports.init = async () => {
     }
   }
 
-  // const rewardInfo = await RewardInfo.find({});
-  // for (let i = 0;i < rewardInfo.length;i++) {
-  //   const playerInfo = await Account.findOne({ accountId: rewardInfo[i].accountId });
-  //   await RewardInfo.findOneAndUpdate(
-  //     { accountId: playerInfo.accountId },
-  //     { playerId: playerInfo.playerId }
-  //   );
-  // }
-
-  // const buyBuildingHistoryInfo = await BuyBuildingHistory.find({});
-  // for (let i = 0;i < buyBuildingHistoryInfo.length;i++) {
-  //   const playerInfo = await Account.findOne({ accountId: buyBuildingHistoryInfo[i].accountId });
-  //   await BuyBuildingHistory.updateMany(
-  //     { accountId: playerInfo.accountId },
-  //     { playerId: playerInfo.playerId }
-  //   );
-  // }
-
-  // const palTokenSaleHistoryInfo = await PalTokenSaleHistory.find({});
-  // for (let i = 0;i < palTokenSaleHistoryInfo.length;i++) {
-  //   const playerInfo = await Account.findOne({ accountId: palTokenSaleHistoryInfo[i].accountId });
-  //   await PalTokenSaleHistory.updateMany(
-  //     { accountId: playerInfo.accountId },
-  //     { playerId: playerInfo.playerId }
-  //   );
-  // }
-
-  // await Placement.updateMany({}, { remaintime: 0 });
   // await Place.updateMany({}, {score: 0});
 
   // await Place.updateMany({}, { score: 0 });
@@ -104,115 +77,40 @@ exports.init = async () => {
 
   // const placementInfo = await Placement.find({});
   // for (let i = 0; i < placementInfo.length; i++) {
-  //   if (placementInfo[i].type >= 20) {
-  //     await Placement.findOneAndUpdate(
-  //       { _id: placementInfo[i]._id },
-  //       { type: placementInfo[i].type + 1 }
-  //     );
-  //   }
-  // }
-
-  // const buyBuildingInfo = await BuyBuilding.find({});
-  // for (let i = 0; i < buyBuildingInfo.length; i++) {
-  //   if (buyBuildingInfo[i].index >= 20) {
-  //     await BuyBuilding.findOneAndUpdate(
-  //       { _id: buyBuildingInfo[i]._id },
-  //       { index: buyBuildingInfo[i].index + 1 }
-  //     );
-  //   }
-  // }
-
-  // const buyBuildingHistoryInfo = await BuyBuildingHistory.find({});
-  // for (let i = 0; i < buyBuildingHistoryInfo.length; i++) {
-  //   if (buyBuildingHistoryInfo[i].buildingIndex >= 20) {
-  //     await BuyBuildingHistory.findOneAndUpdate(
-  //       { _id: buyBuildingHistoryInfo[i]._id },
-  //       { buildingIndex: buyBuildingHistoryInfo[i].buildingIndex + 1 }
-  //     );
-  //   }
-  // }
-
-//  await Placement.updateMany({}, { linkurl: '' });
-
-  // await Placement.updateMany(
-  //   {},
-  //   { name: '' }
-  // );
-
-  // const _tmp_buildingInfo = await Building.find({});
-  // for (let i = 0;i < _tmp_buildingInfo.length;i++) {
-  //   if (_tmp_buildingInfo[i].name != '') {
-  //     await Placement.updateMany(
-  //       { type: _tmp_buildingInfo[i].index },
-  //       { name: _tmp_buildingInfo[i].name }
-  //     );
-  //   }
-  // }
-
-  // const placementInfo = await Placement.find({});
-  // for (let i = 0; i < placementInfo.length; i++) {
-  //   if (placementInfo[i].type >= 20 && placementInfo[i].type <= 22) {
-  //     await Placement.findOneAndUpdate(
-  //       { _id: placementInfo[i]._id },
-  //       { type: placementInfo[i].type + 1 }
-  //     );
-  //   }
-  //   else if (placementInfo[i].type >= 23 && placementInfo[i].type <= 26) {
+  //   if (placementInfo[i].type >= 31) {
   //     await Placement.findOneAndUpdate(
   //       { _id: placementInfo[i]._id },
   //       { type: placementInfo[i].type + 2 }
   //     );
   //   }
-  //   else if (placementInfo[i].type >= 27) {
-  //     await Placement.findOneAndUpdate(
-  //       { _id: placementInfo[i]._id },
-  //       { type: placementInfo[i].type + 4 }
-  //     );
-  //   }
   // }
 
   // const buyBuildingHistoryInfo = await BuyBuildingHistory.find({});
   // for (let i = 0; i < buyBuildingHistoryInfo.length; i++) {
-  //   if (buyBuildingHistoryInfo[i].buildingIndex >= 20 && buyBuildingHistoryInfo[i].buildingIndex <= 22) {
-  //     await BuyBuildingHistory.findOneAndUpdate(
-  //       { _id: buyBuildingHistoryInfo[i]._id },
-  //       { buildingIndex: buyBuildingHistoryInfo[i].buildingIndex + 1 }
-  //     );
-  //   }
-  //   else if (buyBuildingHistoryInfo[i].buildingIndex >= 23 && buyBuildingHistoryInfo[i].buildingIndex <= 26) {
+  //   if (buyBuildingHistoryInfo[i].buildingIndex >= 31) {
   //     await BuyBuildingHistory.findOneAndUpdate(
   //       { _id: buyBuildingHistoryInfo[i]._id },
   //       { buildingIndex: buyBuildingHistoryInfo[i].buildingIndex + 2 }
-  //     );
-  //   }
-  //   else if (buyBuildingHistoryInfo[i].buildingIndex >= 27) {
-  //     await BuyBuildingHistory.findOneAndUpdate(
-  //       { _id: buyBuildingHistoryInfo[i]._id },
-  //       { buildingIndex: buyBuildingHistoryInfo[i].buildingIndex + 4 }
   //     );
   //   }
   // }
 
   // const buyBuildingInfo = await BuyBuilding.find({});
   // for (let i = 0; i < buyBuildingInfo.length; i++) {
-  //   if (buyBuildingInfo[i].index >= 20 && buyBuildingInfo[i].index <= 22) {
-  //     await BuyBuilding.findOneAndUpdate(
-  //       { _id: buyBuildingInfo[i]._id },
-  //       { index: buyBuildingInfo[i].index + 1 }
-  //     );
-  //   }
-  //   else if (buyBuildingInfo[i].index >= 23 && buyBuildingInfo[i].index <= 26) {
+  //   if (buyBuildingInfo[i].index >= 31) {
   //     await BuyBuilding.findOneAndUpdate(
   //       { _id: buyBuildingInfo[i]._id },
   //       { index: buyBuildingInfo[i].index + 2 }
   //     );
   //   }
-  //   else if (buyBuildingInfo[i].index >= 27) {
-  //     await BuyBuilding.findOneAndUpdate(
-  //       { _id: buyBuildingInfo[i]._id },
-  //       { index: buyBuildingInfo[i].index + 4 }
-  //     );
-  //   }
+  // }
+
+  // const furnitureInfo = await Furniture.find({});
+  // for (let i = 0; i < furnitureInfo.length; i++) {
+  //   await Furniture.updateMany(
+  //     { _id: furnitureInfo[i]._id },
+  //     { type: furnitureInfo[i].type + 2 }
+  //   );
   // }
 
   //place current visitor init
@@ -222,7 +120,7 @@ exports.init = async () => {
   let buildingInfo = await Building.find({});
 
   if (buildingInfo.length == 0) {
-    for (let i = 0; i <= 45; i++) {
+    for (let i = 0; i <= 47; i++) {
       if (i == 0) {
         buildingInfo = new Building({
           index: i,
@@ -249,7 +147,7 @@ exports.init = async () => {
           sizey: 0
         });
       }
-      else if (i >= 12 && i <= 30) {
+      else if (i >= 12 && i <= 32) {
         let buildingSize;
         let name;
         let score;
@@ -367,6 +265,20 @@ exports.init = async () => {
           buildtime = 20;
           cost = 80000;
         }
+        else if (i == 31) {
+          buildingSize = '4*5';
+          score = 1250;
+          name = 'spa';
+          buildtime = 20;
+          cost = 5000;
+        }
+        else if (i == 32) {
+          buildingSize = '7*7';
+          score = 1250;
+          name = 'pool';
+          buildtime = 20;
+          cost = 5000;
+        }
 
         buildingInfo = new Building({
           index: i,
@@ -382,25 +294,25 @@ exports.init = async () => {
           sizey: sizey
         });
       }
-      else if (i >= 31 && i <= 40) {
+      else if (i >= 33 && i <= 42) {
         let buildingSize;
         let score;
-        if (i >= 31 && i <= 38) {
+        if (i >= 33 && i <= 40) {
           buildingSize = '1*1';
           score = 2;
         }
-        else if (i == 39) {
+        else if (i == 41) {
           buildingSize = '1*2';
           score = 4;
         }
-        else if (i == 40) {
+        else if (i == 42) {
           buildingSize = '2*1';
           score = 4;
         }
         buildingInfo = new Building({
           index: i,
           type: 'object',
-          url: '/buildings/object/object' + (i - 30) + '.png',
+          url: '/buildings/object/object' + (i - 32) + '.png',
           name: '',
           default: true,
           size: buildingSize,
@@ -416,31 +328,31 @@ exports.init = async () => {
         let score;
         let name;
         let cost;
-        if (i == 41) {
+        if (i == 43) {
           buildingSize = '1*1';
           name = 'Table';
           score = 20;
           cost = 200;
         }
-        else if (i == 42) {
+        else if (i == 44) {
           buildingSize = '1*1';
           name = 'TV';
           score = 20;
           cost = 200;
         }
-        else if (i == 43) {
+        else if (i == 45) {
           buildingSize = '2*1';
           name = 'Cloud';
           score = 20;
           cost = 200;
         }
-        else if (i == 44) {
+        else if (i == 46) {
           buildingSize = '2*2';
           name = 'Bed';
           score = 20;
           cost = 200;
         }
-        else if (i == 45) {
+        else if (i == 47) {
           buildingSize = '3*4';
           name = 'Rug';
           score = 20;
@@ -449,7 +361,7 @@ exports.init = async () => {
         buildingInfo = new Building({
           index: i,
           type: 'furniture',
-          url: '/buildings/furniture/furniture' + (i - 40) + '.png',
+          url: '/buildings/furniture/furniture' + (i - 42) + '.png',
           name: name,
           default: true,
           size: buildingSize,

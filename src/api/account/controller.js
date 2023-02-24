@@ -252,15 +252,14 @@ exports.getPlayerNftCount = async (req_, res_) => {
 }
 
 exports.getFriendList = async (req_, res_) => {
-    console.log("getFriendList log - 1 : ", req_.query);
     const g_accountId = req_.query.accountId;
     const g_searchStr = req_.query.searchStr;
     const g_sortType = req_.query.sortType;
 
     const g_accountData = await Account.findOne({ accountId: g_accountId });
 
-    const friendList = [];
-    for (let i = 0; i < g_accountData.friendList.length; i++) {
+    let friendList = [];
+    for (let i = g_accountData.friendList.length - 1; i >= 0; i--) {
         let friendData = undefined;
         if (g_searchStr == '')
             friendData = await Account.findOne({ accountId: g_accountData.friendList[i] });
@@ -270,9 +269,16 @@ exports.getFriendList = async (req_, res_) => {
             friendList.push(friendData);
     }
 
-    if (g_sortType != 'none')
+    let _sortedFriendList = [];
+    if (g_sortType != 'none') {
         sortJsonArray(friendList, 'playerId', g_sortType);
-    return res_.send({ result: true, data: friendList });
+        _sortedFriendList = friendList;
+    }
+    else {
+        _sortedFriendList = friendList.sort((a, b) => b.loginState - a.loginState);
+    }
+
+    return res_.send({ result: true, data: _sortedFriendList });
 }
 
 exports.getAllPlayerInfo = async (req_, res_) => {
@@ -354,7 +360,7 @@ exports.logout = async (req_, res_) => {
                 loginState: false
             }
         );
-        return res.send({ result: true, data: 'success' });
+        return res_.send({ result: true, data: 'success' });
     } catch (error) {
         return res_.send({ result: false, error: 'Error detected in server progress!' });
     }
@@ -388,6 +394,22 @@ exports.goToView = async (req_, res_) => {
             }
         );
         return res.send({ result: true, data: 'success' });
+    } catch (error) {
+        return res_.send({ result: false, error: 'Error detected in server progress!' });
+    }
+}
+
+exports.editPlayerId = async (req_, res_) => {
+    try {
+        const _oldUsername = req_.body.oldUsername;
+        const _newUsername = req_.body.newUsername;
+
+        const _playerData = await Account.findOneAndUpdate(
+            { playerId: _oldUsername },
+            { playerId: _newUsername },
+            { new: true }
+        );
+        return res_.send({ result: true, accountId: _playerData.accountId, msg: 'success' });
     } catch (error) {
         return res_.send({ result: false, error: 'Error detected in server progress!' });
     }

@@ -17,5 +17,6 @@ router.post('/set_friend', account.setFriend);
 router.post('/set_nft_count', account.setNftCount);
 router.post('/logout', account.logout);
 router.post('/goto_view', account.goToView);
+router.post('/edit_playerId', account.editPlayerId);
 
 module.exports = router;
