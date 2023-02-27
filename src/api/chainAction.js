@@ -319,3 +319,23 @@ exports.setAssociate = async (tokenId) => {
     return false;
   }
 }
+
+exports.transferNFT = async (_sellerId, _buyerId, _nftInfo) => {
+  try {
+    console.log(_sellerId, _buyerId, _nftInfo.token_id, _nftInfo.serial_number);
+    const _nft = new NftId(TokenId.fromString(_nftInfo.token_id), parseInt(_nftInfo.serial_number));
+    const approvedSendTx = new TransferTransaction()
+      .addApprovedNftTransfer(_nft, AccountId.fromString(_sellerId), AccountId.fromString(_buyerId))
+      .setTransactionId(TransactionId.generate(operatorId)) // Spender must generate the TX ID or be the client
+      .freezeWith(client);
+    const approvedSendSign = await approvedSendTx.sign(operatorKey);
+    const approvedSendSubmit = await approvedSendSign.execute(client);
+    const approvedSendRx = await approvedSendSubmit.getReceipt(client);
+
+    if (approvedSendRx.status._code != 22)
+      return false;
+    return true;
+  } catch (error) {
+    return false;
+  }
+}

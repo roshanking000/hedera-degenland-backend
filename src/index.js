@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
-const https = require("https");
+//const https = require("https");
+const http = require("http");
 const fs = require("fs");
 const cors = require('cors');
 const { Server } = require('socket.io');
@@ -62,18 +63,18 @@ db.mongoose
     process.exit();
   });
 
-//const server = http.createServer(app);
+const server = http.createServer(app);
 
-const httpsPort = 3306;
-const privateKey = fs.readFileSync("/etc/letsencrypt/live/degenland.tech/privkey.pem");
-const certificate = fs.readFileSync("/etc/letsencrypt/live/degenland.tech/fullchain.pem");
+// const httpsPort = 3306;
+// const privateKey = fs.readFileSync("/etc/letsencrypt/live/degenland.tech/privkey.pem");
+// const certificate = fs.readFileSync("/etc/letsencrypt/live/degenland.tech/fullchain.pem");
 
-const credentials = {
-  key: privateKey,
-  cert: certificate,
-}
+// const credentials = {
+//   key: privateKey,
+//   cert: certificate,
+// }
 
-const server = https.createServer(credentials, app);
+// const server = https.createServer(credentials, app);
 
 const io = new Server(server, {
   cors: {
@@ -1250,7 +1251,7 @@ io.on("connection", async (socket) => {
   });
 });
 
-//server.listen(3306, () => 'Server is running on port 3306');
-server.listen(httpsPort, () => {
-  console.log(`[degenland.tech] servier is running at port ${httpsPort} as https.`);
-});
+server.listen(3306, () => 'Server is running on port 3306');
+// server.listen(httpsPort, () => {
+//   console.log(`[degenland.tech] servier is running at port ${httpsPort} as https.`);
+// });
