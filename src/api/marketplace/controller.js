@@ -40,6 +40,42 @@ exports.getList = async (req_, res_) => {
     }
 }
 
+exports.getCollectionList = async (req_, res_) => {
+    try {
+        const _nftList = await Marketplace.find({});
+        let _collectionData = [];
+        for (let i = 0;i < _nftList.length;i++) {
+            let _collectionName = _nftList[i].creator;
+            let _flag = 0;
+            for (let j = 0;j < _collectionData.length;j++) {
+                if (_collectionName == _collectionData[j].collectionName)
+                    _flag = 1;
+            }
+            if (_flag == 0) {
+                let _floorPrice = _nftList[i].price;
+                let _totalVolume = 0;
+                for (let j = 0;j < _nftList.length;j++) {
+                    if (_collectionName == _nftList[j].creator) {
+                        _totalVolume += _nftList[j].price;
+                        if (_floorPrice > _nftList[j].price)
+                            _floorPrice = _nftList[j].price;
+                    }
+                }
+                const _collectionInfo = {
+                    imageUrl: _nftList[i].imageUrl,
+                    collectionName: _collectionName,
+                    floorPrice: _floorPrice,
+                    totalVolume: _totalVolume
+                };
+                _collectionData.push(_collectionInfo);
+            }
+        }
+        return res_.send({ result: true,  data: _collectionData });
+    } catch (error) {
+        return res_.send({ result: false, error: 'Error detected in server progress!' });
+    }
+}
+
 exports.getListByAccountId = async (req_, res_) => {
     try {
         if (!req_.query.accountId)

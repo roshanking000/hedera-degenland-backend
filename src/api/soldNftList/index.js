@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const account = require("./controller");
+const soldnftlist = require("./controller");
 
-router.get('/get_sold_list', account.getSoldList);
+router.get('/get_sold_list', soldnftlist.getSoldList);
 
 module.exports = router;

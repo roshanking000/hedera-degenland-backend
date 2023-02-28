@@ -14,23 +14,23 @@ exports.getSoldList = async (req_, res_) => {
         for (let i = 0;i < _nftList.length;i++) {
             const _periodTime = nowTime - _nftList[i].createdAt;
 
-            const _betweenDayTime = Math.ceil(_periodTime/dayTime);
+            const _betweenDayTime = _periodTime/dayTime;
             if (_betweenDayTime > 31)
                 _soldTime = 'about 1 month ago';
             else if (_betweenDayTime > 1 && _betweenDayTime <= 31)
-                _soldTime = 'about ' + _betweenDayTime + ' days ago';
+                _soldTime = 'about ' + Math.ceil(_betweenDayTime) + ' days ago';
             else if (_betweenDayTime == 1)
                 _soldTime = 'about 1 day ago';
             else if (_betweenDayTime < 1) {
-                const _betweenHourTime = Math.ceil(_periodTime/hourTime);
+                const _betweenHourTime = _periodTime/hourTime;
                 if (_betweenHourTime > 1 && _betweenHourTime <= 23)
-                    _soldTime = 'about ' + _betweenHourTime + ' hours ago';
+                    _soldTime = 'about ' + Math.ceil(_betweenHourTime) + ' hours ago';
                 else if (_betweenHourTime == 1)
                     _soldTime = 'about 1 hour ago';
                 else if (_betweenHourTime < 1) {
-                    const _betweenminuteTime = Math.ceil(_periodTime/minuteTime);
+                    const _betweenminuteTime = _periodTime/minuteTime;
                     if (_betweenminuteTime > 1 && _betweenminuteTime <= 59)
-                        _soldTime = _betweenminuteTime + ' minutes ago';
+                        _soldTime = Math.ceil(_betweenminuteTime) + ' minutes ago';
                     else if (_betweenminuteTime == 1)
                         _soldTime = '1 minute ago';
                 }

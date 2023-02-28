@@ -1,19 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const account = require("./controller");
+const marketplace = require("./controller");
 
-router.get('/get_item_detail', account.getItemDetail);
-router.get('/get_list', account.getList);
-router.get('/get_list_by_accountid', account.getListByAccountId);
-router.get('/check_nft', account.checkNft);
+router.get('/get_item_detail', marketplace.getItemDetail);
+router.get('/get_list', marketplace.getList);
+router.get('/get_collection_list', marketplace.getCollectionList);
+router.get('/get_list_by_marketplaceid', marketplace.getListByAccountId);
+router.get('/check_nft', marketplace.checkNft);
 
-router.post('/set_list', account.setList);
-router.post('/cancel_list', account.cancelList);
-router.post('/set_favourites', account.setFavourites);
-router.post('/unset_favourites', account.unsetFavourites);
-router.post('/set_watching', account.setWatching);
-router.post('/unset_watching', account.unsetWatching);
+router.post('/set_list', marketplace.setList);
+router.post('/cancel_list', marketplace.cancelList);
+router.post('/set_favourites', marketplace.setFavourites);
+router.post('/unset_favourites', marketplace.unsetFavourites);
+router.post('/set_watching', marketplace.setWatching);
+router.post('/unset_watching', marketplace.unsetWatching);
 
-router.post('/send_nft', account.sendNft);
+router.post('/send_nft', marketplace.sendNft);
 
 module.exports = router;
