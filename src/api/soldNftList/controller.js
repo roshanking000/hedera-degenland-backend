@@ -2,7 +2,7 @@ const SoldNftList = require('../../models/SoldNftList');
 
 exports.getSoldList = async (req_, res_) => {
     try {
-        const _nftList = await SoldNftList.find({});
+        const _nftList = await SoldNftList.find({ success: true });
 
         const dayTime = 86400000;
         const hourTime = 3600000;

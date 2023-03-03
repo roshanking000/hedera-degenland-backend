@@ -5,7 +5,7 @@ const marketplace = require("./controller");
 router.get('/get_item_detail', marketplace.getItemDetail);
 router.get('/get_list', marketplace.getList);
 router.get('/get_collection_list', marketplace.getCollectionList);
-router.get('/get_list_by_marketplaceid', marketplace.getListByAccountId);
+router.get('/get_list_by_accountid', marketplace.getListByAccountId);
 router.get('/check_nft', marketplace.checkNft);
 
 router.post('/set_list', marketplace.setList);

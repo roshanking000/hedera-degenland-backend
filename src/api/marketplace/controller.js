@@ -247,14 +247,15 @@ exports.sendNft = async (req_, res_) => {
             return res_.send({ result: false, error: 'failed' });
 
         const _nftInfo = {
-            token_id: atob(req_.body.a.token_id),
-            serial_number: atob(req_.body.a.serial_number),
+            token_id: atob(req_.body.a.e),
+            serial_number: atob(req_.body.a.f),
         };
         const _sellerId = atob(req_.body.b);
         const _buyerId = atob(req_.body.c);
         const _soldPrice = atob(req_.body.d);
 
         const claimResult = await transferNFT(_sellerId, _buyerId, _nftInfo);
+
         const _checkSoldNftListRes = await SoldNftList.findOne({ token_id: _nftInfo.token_id, serial_number: _nftInfo.serial_number, success: false });
         let _newSoldNftList;
         if (!_checkSoldNftListRes) {
@@ -274,11 +275,12 @@ exports.sendNft = async (req_, res_) => {
         }
         if (!claimResult)
             return res_.send({ result: false, error: "Error! The transaction was rejected, or failed! Please try again!" });
+
         // add sold nft list
-        await SoldNftList.findOneAndUpdate(
-            { _id: _newSoldNftList._id },
-            { success: true }
-        );
+        // await SoldNftList.findOneAndUpdate(
+        //     { _id: _newSoldNftList._id },
+        //     { success: true }
+        // );
         // delete nft in list
         const _result = await Marketplace.findOneAndDelete({ token_id: _nftInfo.token_id, serial_number: _nftInfo.serial_number });
         if (!_result)

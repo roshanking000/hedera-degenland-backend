@@ -153,14 +153,14 @@ exports.palTokenTransfer = async (to_, amount_) => {
     if (amount_ > 0)
       sendPalBal = parseFloat(amount_) * 10 ** palDecimals; // Spender must generate the TX ID or be the client
     const tokenTransferTx = await new TransferTransaction()
-        .addTokenTransfer(PAL_TOKEN_ID, operatorId, -sendPalBal)
-        .addTokenTransfer(PAL_TOKEN_ID, receiverId, sendPalBal)
-        .freezeWith(client)
-        .sign(operatorKey);
+      .addTokenTransfer(PAL_TOKEN_ID, operatorId, -sendPalBal)
+      .addTokenTransfer(PAL_TOKEN_ID, receiverId, sendPalBal)
+      .freezeWith(client)
+      .sign(operatorKey);
     const tokenTransferSubmit = await tokenTransferTx.execute(client);
     const tokenTransferRx = await tokenTransferSubmit.getReceipt(client);
     if (tokenTransferRx && tokenTransferRx.status._code === 22)
-        return true;
+      return true;
 
     return false;
   } catch (error) {
@@ -213,7 +213,6 @@ exports.sendNft = async (receiverId, serialNum) => {
 
 exports.claimToken = async (_accountId, _hbarAmount) => {
   try {
-    console.log(_accountId, _hbarAmount);
     const transaction = new AccountAllowanceApproveTransaction();
     transaction.approveHbarAllowance(operatorId, AccountId.fromString(_accountId), new Hbar(_hbarAmount));
     transaction.freezeWith(client);
@@ -325,7 +324,7 @@ exports.transferNFT = async (_sellerId, _buyerId, _nftInfo) => {
     console.log(_sellerId, _buyerId, _nftInfo.token_id, _nftInfo.serial_number);
     const _nft = new NftId(TokenId.fromString(_nftInfo.token_id), parseInt(_nftInfo.serial_number));
     const approvedSendTx = new TransferTransaction()
-      .addApprovedNftTransfer(_nft, AccountId.fromString(_sellerId), AccountId.fromString(_buyerId))
+      .addApprovedNftTransfer(_nft, AccountId.fromString(_sellerId), operatorId)
       .setTransactionId(TransactionId.generate(operatorId)) // Spender must generate the TX ID or be the client
       .freezeWith(client);
     const approvedSendSign = await approvedSendTx.sign(operatorKey);
@@ -334,6 +333,40 @@ exports.transferNFT = async (_sellerId, _buyerId, _nftInfo) => {
 
     if (approvedSendRx.status._code != 22)
       return false;
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+exports.getCollectionInfo = async () => {
+  try {
+    console.log('bbbb');
+
+    // var config = {
+    //   method: 'get',
+    //   url: 'https://hedera-nft-backend.herokuapp.com/api/collectioninfo/0.0.1593425',
+    //   headers: {
+    //     'origin': 'https://zuse.market'
+    //   }
+    // };
+
+    var config = {
+      method: 'get',
+      url: 'https://nftier.tech/advanced-analytics/hedera/0.0.1783975',
+    };
+
+    axios(config)
+      .then(function (response) {
+        const _res = JSON.stringify(response.data);
+        console.log(_res);
+        console.log(_res.props.pageProps.collections);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    console.log('aaaa');
     return true;
   } catch (error) {
     return false;
