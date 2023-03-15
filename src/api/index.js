@@ -14,6 +14,7 @@ const BuyBuilding = require("./buybuilding");
 const RewardInfo = require("./reward");
 const Marketplace = require("./marketplace");
 const SoldNftList = require("./soldNftList");
+const Auctions = require("./auctions");
 
 router.use("/auth", Auth);
 router.use("/account", Account);
@@ -27,6 +28,7 @@ router.use("/stake", Stake);
 router.use("/buybuilding", BuyBuilding);
 router.use("/reward", RewardInfo);
 router.use("/marketplace", Marketplace);
+router.use("/auctions", Auctions);
 router.use("/soldnftlist", SoldNftList);
 
 module.exports = router;

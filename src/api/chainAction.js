@@ -81,6 +81,29 @@ exports.receiveAllowanceNftsAndToken = async (sender, nftInfo, hbarAmount, palAm
   }
 }
 
+exports.receiveAllowanceNftAndHbar = async (sender, tokenId, serialNumber, hbarAmount) => {
+  try {
+    const sendHbarBal = new Hbar(hbarAmount); // Spender must generate the TX ID or be the client
+    const _nft = new NftId(TokenId.fromString(tokenId), serialNumber);
+
+    const nftSendTx = new TransferTransaction()
+      .addApprovedHbarTransfer(AccountId.fromString(sender), sendHbarBal.negated())
+      .addHbarTransfer(operatorId, sendHbarBal)
+      .addApprovedNftTransfer(_nft, AccountId.fromString(sender), operatorId)
+      .setTransactionId(TransactionId.generate(operatorId))
+      .freezeWith(client);
+
+    const nftSendSign = await nftSendTx.sign(operatorKey);
+    const nftSendSubmit = await nftSendSign.execute(client);
+    const nftSendRx = await nftSendSubmit.getReceipt(client);
+    if (nftSendRx.status._code != 22)
+      return false;
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 exports.receiveAllowanceHbar = async (sender, hbarAmount) => {
   try {
     const sendHbarBal = new Hbar(hbarAmount); // Spender must generate the TX ID or be the client
@@ -324,13 +347,14 @@ exports.transferNFT = async (_sellerId, _buyerId, _nftInfo) => {
     console.log(_sellerId, _buyerId, _nftInfo.token_id, _nftInfo.serial_number);
     const _nft = new NftId(TokenId.fromString(_nftInfo.token_id), parseInt(_nftInfo.serial_number));
     const approvedSendTx = new TransferTransaction()
-      .addApprovedNftTransfer(_nft, AccountId.fromString(_sellerId), operatorId)
+      .addApprovedNftTransfer(_nft, AccountId.fromString(_sellerId), AccountId.fromString(_buyerId))
       .setTransactionId(TransactionId.generate(operatorId)) // Spender must generate the TX ID or be the client
       .freezeWith(client);
     const approvedSendSign = await approvedSendTx.sign(operatorKey);
     const approvedSendSubmit = await approvedSendSign.execute(client);
     const approvedSendRx = await approvedSendSubmit.getReceipt(client);
 
+    console.log(approvedSendRx.status._code);
     if (approvedSendRx.status._code != 22)
       return false;
     return true;
@@ -367,6 +391,27 @@ exports.getCollectionInfo = async () => {
       });
 
     console.log('aaaa');
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+exports.allowanceNft = async (_accountId, _tokenId, _serialNumber) => {
+  try {
+    const _nft = new NftId(TokenId.fromString(_tokenId), _serialNumber);
+
+    const transaction = new AccountAllowanceApproveTransaction();
+    transaction.approveTokenNftAllowance(_nft, operatorId, AccountId.fromString(_accountId));
+    transaction.freezeWith(client);
+
+    const signTx = await transaction.sign(operatorKey);
+    const txResponse = await signTx.execute(client);
+    const receipt = await txResponse.getReceipt(client);
+    const transactionStatus = receipt.status;
+
+    if (transactionStatus != 22)
+      return false;
     return true;
   } catch (error) {
     return false;

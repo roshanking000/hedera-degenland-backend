@@ -41,11 +41,12 @@ exports.getSoldList = async (req_, res_) => {
                 name: _nftList[i].name,
                 transactionType: _nftList[i].transactionType,
                 soldTime: _soldTime,
+
                 totalAmount: _nftList[i].totalAmount,
                 buyer: _nftList[i].buyer,
                 seller: _nftList[i].seller
             };
-            _soldNftData.push(_soldNftInfo);
+            _soldNftData.unshift(_soldNftInfo);
         }
         return res_.send({ result: true,  data: _soldNftData });
     } catch (error) {
