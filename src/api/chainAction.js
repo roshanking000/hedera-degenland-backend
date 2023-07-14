@@ -19,7 +19,7 @@ const PAL_TOKEN_ID = '0.0.1182820'
 const palDecimals = 8;
 
 const operatorId = AccountId.fromString(process.env.TREASURY_ID);
-const operatorKey = PrivateKey.fromString(atob(process.env.TREASURY_PVKEY));
+const operatorKey = PrivateKey.fromString(process.env.TREASURY_PVKEY);
 const client = Client.forMainnet().setOperator(operatorId, operatorKey);
 /*
 const supplyKey = PrivateKey.fromString(process.env.SUPPLY_KEY);
