@@ -1251,7 +1251,7 @@ io.on("connection", async (socket) => {
   });
 });
 
-server.listen(3306, () => 'Server is running on port 5000');
+server.listen(5000, () => 'Server is running on port 5000');
 // server.listen(httpsPort, () => {
 //   console.log(`[degenland.tech] servier is running at port ${httpsPort} as https.`);
 // });
